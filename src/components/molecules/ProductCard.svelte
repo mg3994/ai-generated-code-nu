@@ -3,6 +3,21 @@
     import type { Product } from "../../jet/models/product";
     import { addToCart } from "../../jet/intents/cartIntent";
     import { navigate } from "../../stores/routeStore";
+    import { currencyStore, formatPrice } from "../../stores/currencyStore";
+    import type { Currency } from "../../stores/currencyStore";
+
+    export let product: Product;
+
+    let currentCurrency: Currency;
+    currencyStore.subscribe((value) => {
+        currentCurrency = value;
+    });
+
+    function handleAddToCart(e: Event) {
+        e.stopPropagation();
+        addToCart(product);
+        alert(`Added ${product.name} to cart!`);
+    }
 
     function handleCardClick() {
         navigate("product-details", { id: product.id });

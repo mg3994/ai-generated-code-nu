@@ -7,6 +7,21 @@
     import type { Product } from "../../jet/models/product";
     import type { Currency } from "../../stores/currencyStore";
 
+    export let productId: string;
+
+    let product: Product | null = null;
+    let loading = true;
+    let currentCurrency: Currency;
+
+    currencyStore.subscribe((value) => {
+        currentCurrency = value;
+    });
+
+    onMount(async () => {
+        // In a real app, fetch product by ID
+        // For now, we'll just mock it or pass it via params if we could,
+        // but typically we fetch by ID.
+        // Let's mock a fetch.
         loading = true;
         await new Promise((r) => setTimeout(r, 500));
 
