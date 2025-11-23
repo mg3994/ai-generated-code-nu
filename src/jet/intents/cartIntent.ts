@@ -3,21 +3,6 @@ import type { Product } from "../models/product";
 import { writable } from "svelte/store";
 
 /**
-// src/jet/intents/cartIntent.ts
-import type { Product } from "../models/product";
-import { writable } from "svelte/store";
-
-/**
-// src/jet/intents/cartIntent.ts
-import type { Product } from "../models/product";
-import { writable } from "svelte/store";
-
-/**
-// src/jet/intents/cartIntent.ts
-import type { Product } from "../models/product";
-import { writable } from "svelte/store";
-
-/**
  * Simple in‑memory cart store.
  * In a real app this would sync with backend / localStorage.
  */
