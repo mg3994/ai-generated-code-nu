@@ -9,16 +9,23 @@
     let recentProducts: Product[] = [];
     let currentCurrency: Currency;
 
+    // Subscribe to stores
     recentlyViewedStore.subscribe((items) => {
         recentProducts = items;
     });
-
     currencyStore.subscribe((value) => {
         currentCurrency = value;
     });
 
     function handleProductClick(id: string) {
         navigate("product-details", { id });
+    }
+
+    // Accessibility: allow keyboard activation (Enter or Space)
+    function handleKey(event: KeyboardEvent, id: string) {
+        if (event.key === "Enter" || event.key === " ") {
+            handleProductClick(id);
+        }
     }
 </script>
 
@@ -118,6 +125,7 @@
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        line-clamp: 2;
     }
 
     .price {

@@ -18,10 +18,10 @@
     let wishlistItems: Product[] = [];
     let showQuickView = false;
 
+    // Subscribe to stores
     currencyStore.subscribe((value: Currency) => {
         currentCurrency = value;
     });
-
     wishlistStore.subscribe((items: Product[]) => {
         wishlistItems = items;
     });
@@ -51,31 +51,38 @@
     function handleCardClick() {
         navigate("product-details", { id: product.id });
     }
+
+    // Accessibility: keyboard activation for card
+    function handleKey(event: KeyboardEvent) {
+        if (event.key === "Enter" || event.key === " ") {
+            handleCardClick();
+        }
+    }
 </script>
 
 <div
     class="card"
-    on:click={handleCardClick}
     role="button"
     tabindex="0"
-    on:keydown={(e) => e.key === "Enter" && handleCardClick()}
+    on:click={handleCardClick}
+    on:keydown={handleKey}
 >
     <div class="image-container">
         {#if product.imageUrl}
             <img src={product.imageUrl} alt={product.name} />
         {/if}
         <button
+            type="button"
             class="wishlist-btn {isInWishlist ? 'active' : ''}"
             on:click={handleToggleWishlist}
             aria-label="Add to wishlist"
         >
             {isInWishlist ? "❤️" : "🤍"}
         </button>
-        <button class="quick-view-btn" on:click={handleQuickView}>
+        <button type="button" class="quick-view-btn" on:click={handleQuickView}>
             👁️ Quick View
         </button>
     </div>
-
     <div class="content">
         <h3>{product.name}</h3>
         {#if product.category}
@@ -86,7 +93,7 @@
             <span class="price"
                 >{formatPrice(product.price, currentCurrency?.code)}</span
             >
-            <button class="add-btn" on:click={handleAddToCart}
+            <button type="button" class="add-btn" on:click={handleAddToCart}
                 >Add to Cart</button
             >
         </div>
@@ -106,30 +113,25 @@
         transition: all 0.3s;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
-
     .card:hover {
         transform: translateY(-8px);
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     }
-
     .image-container {
         position: relative;
         height: 250px;
         overflow: hidden;
         background: #f8f9fa;
     }
-
     .image-container img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         transition: transform 0.3s;
     }
-
     .card:hover .image-container img {
         transform: scale(1.05);
     }
-
     .wishlist-btn {
         position: absolute;
         top: 10px;
@@ -148,15 +150,12 @@
         transition: all 0.2s;
         z-index: 2;
     }
-
     .wishlist-btn:hover {
         transform: scale(1.1);
     }
-
     .wishlist-btn.active {
         animation: heartBeat 0.3s ease;
     }
-
     @keyframes heartBeat {
         0%,
         100% {
@@ -166,7 +165,6 @@
             transform: scale(1.2);
         }
     }
-
     .quick-view-btn {
         position: absolute;
         bottom: 10px;
@@ -182,20 +180,16 @@
         transition: all 0.3s;
         opacity: 0;
     }
-
     .card:hover .quick-view-btn {
         transform: translateX(-50%) translateY(0);
         opacity: 1;
     }
-
     .quick-view-btn:hover {
         background: rgba(0, 0, 0, 0.9);
     }
-
     .content {
         padding: 1.5rem;
     }
-
     h3 {
         margin: 0 0 0.5rem 0;
         font-size: 1.1rem;
@@ -206,14 +200,12 @@
         overflow: hidden;
         line-clamp: 2;
     }
-
     .category {
         color: #666;
         font-size: 0.85rem;
         text-transform: capitalize;
         margin-bottom: 0.5rem;
     }
-
     .description {
         color: #666;
         font-size: 0.9rem;
@@ -224,20 +216,17 @@
         overflow: hidden;
         line-clamp: 2;
     }
-
     .footer {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 1rem;
     }
-
     .price {
         font-size: 1.25rem;
         font-weight: bold;
         color: #28a745;
     }
-
     .add-btn {
         background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
         color: white;
@@ -249,7 +238,6 @@
         transition: all 0.2s;
         white-space: nowrap;
     }
-
     .add-btn:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
