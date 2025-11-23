@@ -148,7 +148,6 @@
       {currentMax}
       onChange={handlePriceRangeChange}
     />
-    />
   {/if}
   {#if loading}
     <LoadingSpinner message="Loading products..." />
