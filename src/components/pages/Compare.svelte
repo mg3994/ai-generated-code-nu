@@ -14,10 +14,10 @@
     let compareProducts: Product[] = [];
     let currentCurrency: Currency;
 
+    // Subscribe to stores
     comparisonStore.subscribe((items) => {
         compareProducts = items;
     });
-
     currencyStore.subscribe((value) => {
         currentCurrency = value;
     });
@@ -42,11 +42,13 @@
 
 <div class="compare-page">
     <div class="header">
-        <button class="back-btn" on:click={() => navigate("home")}
-            >&larr; Back</button
+        <button type="button" class="back-btn" on:click={() => navigate("home")}
+            >← Back</button
         >
         <h1>Product Comparison</h1>
-        <button class="clear-btn" on:click={handleClearAll}>Clear All</button>
+        <button type="button" class="clear-btn" on:click={handleClearAll}
+            >Clear All</button
+        >
     </div>
 
     {#if compareProducts.length < 2}
@@ -99,8 +101,6 @@
                                         <span class="category"
                                             >{product.category || "N/A"}</span
                                         >
-                                    {:else if feature.key === "name"}
-                                        <strong>{product[feature.key]}</strong>
                                     {:else}
                                         {product[feature.key] || "N/A"}
                                     {/if}
@@ -120,14 +120,12 @@
         max-width: 1400px;
         margin: 0 auto;
     }
-
     .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 2rem;
     }
-
     .back-btn,
     .clear-btn {
         background: none;
@@ -138,35 +136,29 @@
         padding: 0.5rem 1rem;
         transition: color 0.2s;
     }
-
     .back-btn:hover,
     .clear-btn:hover {
         color: #0056b3;
         text-decoration: underline;
     }
-
     h1 {
         margin: 0;
         color: #333;
     }
-
     .empty-state {
         text-align: center;
         padding: 4rem 2rem;
         background: #f8f9fa;
         border-radius: 12px;
     }
-
     .empty-state h2 {
         color: #333;
         margin-bottom: 1rem;
     }
-
     .empty-state p {
         color: #666;
         margin-bottom: 2rem;
     }
-
     .shop-btn {
         background: #007bff;
         color: white;
@@ -177,15 +169,12 @@
         font-size: 1rem;
         transition: background 0.2s;
     }
-
     .shop-btn:hover {
         background: #0056b3;
     }
-
     .comparison-table {
         overflow-x: auto;
     }
-
     table {
         width: 100%;
         border-collapse: collapse;
@@ -194,20 +183,17 @@
         overflow: hidden;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
-
     th,
     td {
         padding: 1.5rem;
         text-align: left;
         border-bottom: 1px solid #eee;
     }
-
     th {
         background: #f8f9fa;
         font-weight: 600;
         color: #333;
     }
-
     .feature-col {
         width: 200px;
         position: sticky;
@@ -215,25 +201,21 @@
         background: #f8f9fa;
         z-index: 1;
     }
-
     .product-col {
         min-width: 250px;
     }
-
     .product-header {
         display: flex;
         flex-direction: column;
         gap: 1rem;
         align-items: center;
     }
-
     .product-header img {
         width: 150px;
         height: 150px;
         object-fit: cover;
         border-radius: 8px;
     }
-
     .add-cart {
         background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
         color: white;
@@ -244,11 +226,9 @@
         font-size: 0.9rem;
         transition: transform 0.2s;
     }
-
     .add-cart:hover {
         transform: translateY(-2px);
     }
-
     .feature-label {
         font-weight: 600;
         color: #555;
@@ -256,31 +236,25 @@
         position: sticky;
         left: 0;
     }
-
     .feature-value {
         color: #333;
     }
-
     .price {
         color: #28a745;
         font-size: 1.25rem;
     }
-
     .category {
         text-transform: capitalize;
         color: #666;
     }
-
     @media (max-width: 768px) {
         .header {
             flex-direction: column;
             gap: 1rem;
         }
-
         .feature-col {
             width: 120px;
         }
-
         .product-col {
             min-width: 200px;
         }

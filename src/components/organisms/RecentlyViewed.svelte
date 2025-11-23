@@ -30,6 +30,7 @@
                 <div
                     class="recent-item"
                     on:click={() => handleProductClick(product.id)}
+                    on:keydown={(e) => handleKey(e, product.id)}
                     role="button"
                     tabindex="0"
                 >
