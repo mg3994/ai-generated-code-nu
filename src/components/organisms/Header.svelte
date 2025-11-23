@@ -1,6 +1,7 @@
 <!-- src/components/organisms/Header.svelte -->
 <script lang="ts">
     import { cartStore } from "../../jet/intents/cartIntent";
+    import { wishlistStore } from "../../jet/intents/wishlistIntent";
     import { themeStore, getEffectiveTheme } from "../../stores/themeStore";
     import { localeStore, SUPPORTED_LOCALES } from "../../stores/localeStore";
     import {
@@ -11,11 +12,18 @@
     import type { Product } from "../../jet/models/product";
     import type { LocaleInfo } from "../../stores/localeStore";
     import type { Currency } from "../../stores/currencyStore";
+    import { navigate } from "../../stores/routeStore";
+    import Badge from "../atoms/Badge.svelte";
 
     // Subscribe to stores
     let cartCount = 0;
     cartStore.subscribe((items: Product[]) => {
         cartCount = items.length;
+    });
+
+    let wishlistCount = 0;
+    wishlistStore.subscribe((items: Product[]) => {
+        wishlistCount = items.length;
     });
 
     let currentTheme: ThemeMode;
@@ -61,13 +69,13 @@
 
     <div class="actions">
         <select on:change={handleLocaleChange} value={currentLocale?.code}>
-            {#each SUPPORTED_LOCALES as locale}
+            {#each SUPPORTED_LOCALES as locale (locale.code)}
                 <option value={locale.code}>{locale.flag} {locale.name}</option>
             {/each}
         </select>
 
         <select on:change={handleCurrencyChange} value={currentCurrency?.code}>
-            {#each SUPPORTED_CURRENCIES as currency}
+            {#each SUPPORTED_CURRENCIES as currency (currency.code)}
                 <option value={currency.code}
                     >{currency.symbol} {currency.code}</option
                 >
@@ -78,11 +86,14 @@
             Theme: {currentTheme}
         </button>
 
-        <button>
-            Cart
-            {#if cartCount > 0}
-                <span class="cart-badge">{cartCount}</span>
-            {/if}
+        <button class="icon-btn" on:click={() => navigate("wishlist")}>
+            ❤️ Wishlist
+            <Badge count={wishlistCount} variant="danger" />
+        </button>
+
+        <button class="icon-btn" on:click={() => navigate("cart")}>
+            🛒 Cart
+            <Badge count={cartCount} variant="primary" />
         </button>
     </div>
 </header>
@@ -120,12 +131,10 @@
     select:hover {
         background-color: #e9ecef;
     }
-    .cart-badge {
-        background-color: red;
-        color: white;
-        border-radius: 50%;
-        padding: 0.2rem 0.5rem;
-        font-size: 0.8rem;
-        margin-left: 0.2rem;
+    .icon-btn {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
     }
 </style>

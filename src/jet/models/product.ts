@@ -14,6 +14,7 @@ export interface Product {
     price: number; // in minor currency units (e.g., cents)
     currency: string; // ISO 4217 code, e.g., "USD"
     imageUrl?: string;
+    category?: string;
 }
 
 /**

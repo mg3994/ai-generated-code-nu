@@ -10,7 +10,7 @@ export interface ConfigBag {
 }
 
 export const defaultConfig: ConfigBag = {
-    apiBase: import.meta.env.VITE_API_BASE ?? '/api',
+    apiBase: import.meta.env.VITE_API_BASE ?? 'https://fakestoreapi.com',
     defaultLocale: 'en-US',
     themeMode: 'system',
 };
